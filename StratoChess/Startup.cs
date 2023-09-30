@@ -1,9 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace StratoChess
 {
     public class Startup
@@ -18,17 +12,22 @@ namespace StratoChess
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // .AddJsonOptions(options =>
+            // {
+            //     options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            // });
 
-            // Configure CORS to allow requests from http://localhost:3000
+            // Enable CORS if needed
             services.AddCors(options =>
             {
-                options.AddPolicy("ReactCorsPolicy", builder =>
+                options.AddPolicy("AllowReactApp", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000")
+                    builder.WithOrigins("http://localhost:3000") // Adjust this to your React app's URL
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
             });
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,10 +42,10 @@ namespace StratoChess
                 app.UseHsts();
             }
 
-            // Use CORS middleware to allow requests from http://localhost:3000
-            app.UseCors("ReactCorsPolicy");
-
             app.UseRouting();
+
+            // Enable CORS middleware
+            app.UseCors("AllowReactApp");
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
 namespace StratoChess
 {
     public class Program
@@ -15,4 +18,3 @@ namespace StratoChess
                 });
     }
 }
-

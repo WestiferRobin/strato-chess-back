@@ -9,8 +9,7 @@ namespace StratoChess {
         [HttpGet]
         public IActionResult GetTestName()
         {
-            var testName = new TestName("Mr Lambda");
-            return Ok(testName);
+            return Ok(new TestName("Wes", "Lambda"));
         }
     }
 

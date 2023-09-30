@@ -1,12 +1,18 @@
+using Newtonsoft.Json;
 
 namespace StratoChess {
-    class TestName
-    {
-        public string Name { get; }
+    public class TestName
+{
+    [JsonProperty("firstName")]
+    public string FirstName { get; set; }
 
-        public TestName(string name)
-        {
-            Name = name;
-        }
+    [JsonProperty("lastName")]
+    public string LastName { get; set; }
+
+    public TestName(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName = lastName;
     }
+}
 }
