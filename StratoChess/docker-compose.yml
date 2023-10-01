@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  webapi:
+    image: strato-chess-back  # Use the name of your .NET 7 Web API image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5154:80" # Map host port 5154 to container port 80
+    depends_on:
+      - postgres-strato-chess-db
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=strato-chess-db;User ID=postgres;Password=postgres"
+
+  postgres-strato-chess-db:
+    image: postgres:latest
+    container_name: postgres-strato-chess-db
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432
+    environment:
+      POSTGRES_DB: strato-chess-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
