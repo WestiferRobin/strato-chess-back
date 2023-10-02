@@ -1,4 +1,5 @@
 using StratoChess.Data;
+using StratoChess.DTOs;
 using StratoChess.Models;
 
 namespace StratoChess.Services
@@ -12,34 +13,47 @@ namespace StratoChess.Services
             _context = context;
         }
 
-        public Player CreatePlayer(Player player)
+        public PlayerDto CreatePlayer(PlayerDto playerDto)
         {
-            if (player == null)
+            if (playerDto == null)
             {
-                throw new ArgumentNullException(nameof(player));
+                throw new ArgumentNullException(nameof(playerDto));
             }
+
+            var player = new Player()
+            {
+                Name = playerDto.Name
+            };
 
             // Add logic to create a new player in the database
             // For example:
-            // _context.Players.Add(player);
-            // _context.SaveChanges();
+            var result = _context.Players.Add(player);
+            _context.SaveChanges();
+
+            var resultPlayer = new PlayerDto()
+            {
+                Name = result.Entity.Name
+            };
 
             // Return the created player with its assigned ID
-            return player;
+            return resultPlayer;
         }
 
-        public IEnumerable<Player> GetAllPlayers()
+        public IEnumerable<PlayerDto?> GetAllPlayers()
         {
             // Retrieve all players from the database
-            var players = _context.Players;
-
-            // You can perform additional logic here if needed
-
-            // return players;
-            return new List<Player>();
+            var players = new List<PlayerDto?>();
+            foreach (var player in _context.Players)
+            {
+                players.Add(new PlayerDto()
+                {
+                    Name = player.Name,
+                });
+            }
+            return players;
         }
 
-        public Player GetPlayerById(int id)
+        public PlayerDto? GetPlayerById(int id)
         {
             // Retrieve a player by ID from the database
             var player = _context.Players.Find(id);
@@ -51,8 +65,11 @@ namespace StratoChess.Services
             }
 
             // You can perform additional logic here if needed
-
-            return player;
+            var playerDto = new PlayerDto()
+            {
+                Name = player.Name
+            };
+            return playerDto;
         }
     }
 }

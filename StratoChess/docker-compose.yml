@@ -11,7 +11,7 @@ services:
     depends_on:
       - postgres-strato-chess-db
     environment:
-      ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=strato-chess-db;User ID=postgres;Password=postgres"
+      ConnectionStrings__DefaultConnection: "Host=postgres-strato-chess-db;Port=5432;Database=strato-chess-db;Username=postgres;Password=postgres"
 
   postgres-strato-chess-db:
     image: postgres:latest

@@ -6,7 +6,7 @@ namespace StratoChess.Data
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        : base(options)
         {
         }
 
@@ -15,7 +15,14 @@ namespace StratoChess.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure your model relationships and constraints here
+            // Example: Configuring a unique constraint on the Name property
+            modelBuilder.Entity<Player>()
+                .HasIndex(player => player.Name)
+                .IsUnique();
+
+            // Add any other model-specific configurations here
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

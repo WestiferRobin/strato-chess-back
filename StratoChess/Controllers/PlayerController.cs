@@ -21,53 +21,26 @@ namespace StratoChess.Controllers
         public IActionResult GetAllPlayers()
         {
             var players = _playerService.GetAllPlayers();
-            var playerDtos = players.Select(player => new PlayerDto
-            {
-                Id = player.Id,
-                FirstName = player.FirstName,
-                LastName = player.LastName,
-                // Map other properties as needed
-            });
-            return Ok(playerDtos);
+            return Ok(players);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetPlayerById(int id)
         {
-            // var player = _playerService.GetPlayerById(id);
-            // if (player == null)
-            // {
-            //     return NotFound();
-            // }
-
-            var playerDto = new PlayerDto
+            var player = _playerService.GetPlayerById(id);
+            if (player == null)
             {
-                Id = 0,
-                FirstName = "Wes",
-                LastName = "Webb"
-                // Id = player.Id,
-                // FirstName = player.FirstName,
-                // LastName = player.LastName,
-                // // Map other properties as needed
-            };
+                return NotFound();
+            }
 
-            return Ok(playerDto);
+            return Ok(player);
         }
 
         [HttpPost]
-        public IActionResult CreatePlayer([FromBody] PlayerDto playerDto)
+        public IActionResult CreatePlayer([FromBody] PlayerDto player)
         {
-            var player = new Player
-            {
-                FirstName = playerDto.FirstName,
-                LastName = playerDto.LastName,
-                // Map other properties as needed
-            };
-
             var createdPlayer = _playerService.CreatePlayer(player);
-            return CreatedAtAction(nameof(GetPlayerById), new { id = createdPlayer.Id }, createdPlayer);
+            return Ok(createdPlayer);
         }
-
-        // Other CRUD actions and route definitions...
     }
 }
