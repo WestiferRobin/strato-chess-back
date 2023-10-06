@@ -1,4 +1,4 @@
-INSERT INTO player (player_name) VALUES
+INSERT INTO "Players" ("Name") VALUES
 ('Wes'),
 ('Lambda'),
 ('Alpha'),
