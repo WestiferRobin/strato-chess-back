@@ -1,4 +1,6 @@
 ﻿using System;
+using StratoChess.Enums;
+
 namespace StratoChess.DTOs
 {
 	public class BoardDto
@@ -18,6 +20,11 @@ namespace StratoChess.DTOs
                 new() { 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' },
                 new() { 'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R' }
             };
+        }
+
+        public char GetSquareFrom(HorizontalPostion horizontal, VerticalPostion vertical)
+        {
+            return Board[(int)horizontal][(int)vertical];
         }
 	}
 }
