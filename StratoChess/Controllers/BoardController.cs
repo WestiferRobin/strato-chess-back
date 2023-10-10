@@ -1,37 +1,39 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using StratoChess.Converter;
-using StratoChess.DTOs;
-using StratoChess.Services;
+using StratoChess.DTOs.Board;
+using StratoChess.DTOs.Game;
+using StratoChess.DTOs.Player;
+using StratoChess.Services.Board;
 
 namespace StratoChess.Controllers
 {
-    [Route("/board")]
+    [Route("board")]
     [ApiController]
     public class BoardController : ControllerBase
     {
-        public BoardDto board = new();
+        private readonly IBoardService boardService;
 
-        public BoardController()
+        public BoardController(IBoardService service)
         {
+            this.boardService = service;
         }
 
-        [HttpGet]
-        public IActionResult GetBoard()
+        [HttpPost("classic")]
+        public IActionResult ViewClassicBoard(
+            [FromBody] ClassicBoardRequestDto boardRequest
+        )
         {
-            return Ok(board);
+            ClassicBoardResponseDto result = this.boardService.GetClassicBoard(boardRequest);
+            return Ok(result);
         }
 
-        [HttpGet("{position}")]
-        public IActionResult GetSquare(string position)
+        [HttpPut("classic")]
+        public IActionResult UpdateClassicBoard(
+            [FromBody] UpdateClassicBoardDto updateRequest
+        )
         {
-            if (position.Length != 2) return NotFound($"position {position} isn't valid");
-            var index = BoardPositionConverter.GetIndexPosition($"{position[0]}:{position[1]}");
-            int col = index[0, 0];
-            int row = index[1, 0];
-            var square = board.Board[row][col];
-            return Ok(square);
+            ClassicBoardResponseDto result = this.boardService.UpdateClassicBoard(updateRequest);
+            return Ok(result);
         }
     }
 }
-

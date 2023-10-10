@@ -1,46 +1,34 @@
+using System.Numerics;
 using Microsoft.AspNetCore.Mvc;
-using StratoChess.Models;
+using StratoChess.DTOs.Player;
+using StratoChess.DTOs.Player.Sheet;
 using StratoChess.Services;
-using StratoChess.DTOs;
-using System.Linq;
 
 namespace StratoChess.Controllers
 {
-    [Route("players")]
+    [Route("player")]
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        private readonly IPlayerService _playerService;
+        private readonly IPlayerService playerService;
 
         public PlayerController(IPlayerService playerService)
         {
-            _playerService = playerService;
+            this.playerService = playerService;
         }
 
-        [HttpGet]
-        public IActionResult GetAllPlayers()
+        [HttpPost("sheet")]
+        public IActionResult ViewPlayerSheet([FromBody] PlayerSheetRequestDto player)
         {
-            var players = _playerService.GetAllPlayers();
-            return Ok(players);
+            PlayerSheetResponseDto result = this.playerService.GetPlayerSheet(player);
+            return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetPlayerById(int id)
+        [HttpPost("command")]
+        public IActionResult CommandPlayer([FromBody] PlayerCommandRequestDto command)
         {
-            var player = _playerService.GetPlayerById(id);
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(player);
-        }
-
-        [HttpPost]
-        public IActionResult CreatePlayer([FromBody] PlayerDto player)
-        {
-            var createdPlayer = _playerService.CreatePlayer(player);
-            return Ok(createdPlayer);
+            PlayerCommandResponseDto result = this.playerService.ExecutePlayerCommand(command);
+            return Ok(result);
         }
     }
 }

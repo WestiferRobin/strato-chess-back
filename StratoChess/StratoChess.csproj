@@ -19,10 +19,37 @@
 
   <ItemGroup>
     <None Remove="Enums\" />
+    <None Remove="Helper\" />
+    <None Remove="Models\Player\" />
+    <None Remove="Models\Player\User\" />
+    <None Remove="Models\Player\Prism\" />
+    <None Remove="Services\Player\" />
+    <None Remove="Services\Game\" />
+    <None Remove="Services\Board\" />
+    <None Remove="DTOs\Game\" />
+    <None Remove="DTOs\Board\" />
+    <None Remove="DTOs\Player\" />
+    <None Remove="DTOs\Player\Sheet\" />
+    <None Remove="Constants\" />
     <None Remove="Converter\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Helper\" />
+    <Folder Include="Models\Player\" />
+    <Folder Include="Models\Player\User\" />
+    <Folder Include="Models\Player\Prism\" />
+    <Folder Include="Services\Player\" />
+    <Folder Include="Services\Game\" />
+    <Folder Include="Services\Board\" />
+    <Folder Include="DTOs\Game\" />
+    <Folder Include="DTOs\Board\" />
+    <Folder Include="DTOs\Player\" />
+    <Folder Include="DTOs\Player\Sheet\" />
+    <Folder Include="Constants\" />
     <Folder Include="Converter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" />
   </ItemGroup>
 </Project>

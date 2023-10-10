@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using StratoChess.Enums;
+﻿using StratoChess.Enums;
 
 namespace StratoChess.Converter
 {
-	public static class BoardPositionConverter
+	public static class BoardHelper
 	{
 		public static int[,] GetIndexPosition(HorizontalPostion horizontal, VerticalPostion vertical)
 		{
