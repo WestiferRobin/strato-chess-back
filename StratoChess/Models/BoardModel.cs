@@ -12,6 +12,9 @@ namespace StratoChess.Models
 
         public Guid SessionId { get; set; }
 
+        [Required]
+        public string BoardData { get; set; }
+
         [ForeignKey(nameof(SessionId))]
         public SessionModel Session { get; set; }
 

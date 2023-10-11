@@ -15,7 +15,22 @@ namespace StratoChess.Services.Board
 
         public ClassicBoardResponseDto GetClassicBoard(ClassicBoardRequestDto boardRequest)
         {
-            throw new NotImplementedException();
+            var sessionId = boardRequest.SessionId;
+            var boardId = boardRequest.BoardId;
+
+            var sessionModel = context.Sessions
+                .Where(session => session.Id == sessionId)
+                .First() ?? throw new NullReferenceException($"{sessionId} Session is not found");
+
+            var boardModel = context.Boards
+                .Where(board => board.Id == boardId &&
+                    board.SessionId == sessionId
+                ).First() ?? throw new NullReferenceException($"{boardId} Board is not found");
+
+            return new ClassicBoardResponseDto()
+            {
+                Board = boardModel.BoardData
+            }
         }
 
         public ClassicBoardResponseDto UpdateClassicBoard(UpdateClassicBoardDto updateRequest)

@@ -12,11 +12,6 @@ namespace StratoChess.DTOs.Board
 		{
             Board = BoardConstants.InitalizeClassicBoard();
         }
-
-        //public char GetSquareFrom(HorizontalPostion horizontal, VerticalPostion vertical)
-        //{
-        //    return Board[(int)horizontal][(int)vertical];
-        //}
 	}
 }
 

@@ -141,13 +141,12 @@ namespace StratoChess.Services.Game
         public ClassicGameViewDto ViewClassicGame(Guid sessionId)
         {
             var sessionModel = this.context.Sessions
-                .Where(session => session.Id == sessionId).FirstOrDefault();
-            if (sessionModel == null)
-            {
+                .Where(session => session.Id == sessionId).FirstOrDefault() ??
                 throw new NullReferenceException($"{sessionId} is not found");
-            }
+
             var boardModel = this.context.Boards
-                .Where(board => board.SessionId == sessionModel.Id).First();
+                .Where(board => board.SessionId == sessionModel.Id)
+                .First();
 
             var response = new ClassicGameViewDto()
             {
