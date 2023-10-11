@@ -42,7 +42,6 @@ namespace StratoChess.Data
                 .HasOne(up => up.User)
                 .WithMany()
                 .HasForeignKey(up => up.UserId);
-            //modelBuilder.Entity<UserPlayer>().HasKey(up => up.Id);
             modelBuilder.Entity<UserPlayer>().Property(up => up.UserId).IsRequired();
 
             modelBuilder.Entity<PrismPlayer>()
@@ -50,9 +49,6 @@ namespace StratoChess.Data
                 .HasOne(pp => pp.Prism)
                 .WithMany()
                 .HasForeignKey(pp => pp.PrismId);
-
-            //modelBuilder.Entity<PrismPlayer>().HasKey(pp => pp.Id);
-            modelBuilder.Entity<PrismPlayer>().Property(pp => pp.PrismId).IsRequired();
 
             modelBuilder.Entity<PlayerTheme>().HasKey(pt => pt.Id);
             modelBuilder.Entity<PlayerTheme>().Property(pt => pt.PrimaryColor).IsRequired();
@@ -68,5 +64,6 @@ namespace StratoChess.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }

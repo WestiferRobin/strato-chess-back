@@ -9,8 +9,8 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Npgsql" Version="7.0.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
@@ -32,6 +32,7 @@
     <None Remove="DTOs\Player\Sheet\" />
     <None Remove="Constants\" />
     <None Remove="Converter\" />
+    <None Remove="Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
@@ -48,6 +49,7 @@
     <Folder Include="DTOs\Player\Sheet\" />
     <Folder Include="Constants\" />
     <Folder Include="Converter\" />
+    <Folder Include="Factories\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" />

@@ -8,6 +8,9 @@ using StratoChess.Services.Game;
 using StratoChess.Models.Player.User;
 using StratoChess.Enums;
 using StratoChess.Models.Player.Prism;
+using StratoChess.Models;
+using StratoChess.Converter;
+using StratoChess.Models.Player;
 
 namespace StratoChess
 {
@@ -64,34 +67,124 @@ namespace StratoChess
             });
         }
 
+        private static void AddWes(StratoChessDbContext dbContext)
+        {
+            var userModel = new UserModel()
+            {
+                Name = "Wesley",
+                Username = "Westifer",
+                Email = "w.webb0919@gmail.com",
+                Password = "Password123"
+            };
+            var userTheme = new PlayerTheme()
+            {
+                PrimaryColor = "#fff",
+                SecondaryColor = "#f00"
+            };
+            dbContext.PlayerThemes.Add(userTheme);
+            dbContext.SaveChanges();
+
+            dbContext.Users.Add(userModel);
+            dbContext.SaveChanges();
+
+            var userPlayer = new UserPlayer()
+            {
+                UserId = userModel.Id,
+                Name = userModel.Username,
+                PlayerRank = 800,
+                ThemeId = userTheme.Id
+            };
+            dbContext.Players.Add(userPlayer);
+            dbContext.SaveChanges();
+        }
+
+        private static void AddEmma(StratoChessDbContext dbContext)
+        {
+            var userModel = new UserModel()
+            {
+                Name = "Emma",
+                Username = "Eburr",
+                Email = "ee@gmail.com",
+                Password = "Password321"
+            };
+            var userTheme = new PlayerTheme()
+            {
+                PrimaryColor = "#000",
+                SecondaryColor = "#0ff"
+            };
+            dbContext.PlayerThemes.Add(userTheme);
+            dbContext.SaveChanges();
+
+            dbContext.Users.Add(userModel);
+            dbContext.SaveChanges();
+
+            var userPlayer = new UserPlayer()
+            {
+                UserId = userModel.Id,
+                Name = userModel.Username,
+                PlayerRank = 800,
+                ThemeId = userTheme.Id
+            };
+            dbContext.Players.Add(userPlayer);
+            dbContext.SaveChanges();
+        }
+
+        private static void AddDatabaseData(StratoChessDbContext dbContext)
+        {
+            if (!dbContext.Prisms.Any())
+            {
+                foreach (var templateObj in Enum.GetValues(typeof(PrismTemplate)))
+                {
+                    var template = (PrismTemplate)templateObj;
+                    var prismModel = new PrismModel()
+                    {
+                        Template = template
+                    };
+                    var primaryColor = ThemeConverter.ConvertColor(template);
+                    var secondaryColor = template != PrismTemplate.Omega
+                        ? "#000" : "#fff";
+                    var prismTheme = new PlayerTheme()
+                    {
+                        PrimaryColor = primaryColor,
+                        SecondaryColor = secondaryColor
+                    };
+                    dbContext.Prisms.Add(prismModel);
+                    dbContext.SaveChanges();
+                    dbContext.PlayerThemes.Add(prismTheme);
+                    dbContext.SaveChanges();
+
+                    var prismName = Enum.GetName(typeof(PrismTemplate), template);
+                    var prismPlayer = new PrismPlayer()
+                    {
+                        PrismId = prismModel.Id,
+                        Name = prismName!,
+                        PlayerRank = 800,
+                        ThemeId = prismTheme.Id
+                    };
+                    dbContext.Players.Add(prismPlayer);
+                    dbContext.SaveChanges();
+                }
+            }
+            if (!dbContext.Users.Any())
+            {
+                if (!dbContext.Users.Where(user => user.Email == "ww@gmail.com").Any())
+                {
+                    AddWes(dbContext);
+                }
+                if (!dbContext.Users.Where(user => user.Email == "ee@gmail.com").Any())
+                {
+                    AddEmma(dbContext);
+                }
+            }
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<StratoChessDbContext>();
                 dbContext.Database.EnsureCreated();
-                if (!dbContext.Users.Any())
-                {
-                    dbContext.Users.Add(new UserModel()
-                    {
-                        Name = "Wesley",
-                        Username = "Wes",
-                        Email = "w.webb0919@gmail.com",
-                        Password = "Password123"
-                    });
-                    dbContext.SaveChanges();
-                }
-                if (!dbContext.Prisms.Any())
-                {
-                    foreach (var template in Enum.GetValues(typeof(PrismTemplate)))
-                    {
-                        dbContext.Prisms.Add(new PrismModel()
-                        {
-                            Template = (PrismTemplate)template
-                        });
-                    }
-                    dbContext.SaveChanges();
-                }
+                AddDatabaseData(dbContext);
             }
 
             if (env.IsDevelopment())

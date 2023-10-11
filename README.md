@@ -18,6 +18,13 @@
     - Proxy Tables
         - Need to add some proxy tables per session
         - Maybe update the session id attribues and keep a table to the REAL values
+- Do Unit tests for ClassicViewControllers
+- Link with mu-prism => Prisms
+- Link with mu-system => Users
+- Do Integration Tests
+- Design TrainingView
+- Design TournementView
+- Design HomeView
 
 ## Game Controller
 CLASSIC:

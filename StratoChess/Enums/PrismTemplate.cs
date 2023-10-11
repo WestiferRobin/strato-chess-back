@@ -3,8 +3,8 @@ namespace StratoChess.Enums
 {
 	public enum PrismTemplate
 	{
-		Delta = 0xFFF, // 7
-		Mu = 0x888, // 8
+        Mu = 0xFFF, // 7
+        Delta = 0x888, // 8
         Omega = 0x000, // 0
 
         Alpha = 0xF00, // 4
